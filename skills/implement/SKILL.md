@@ -697,6 +697,28 @@ Report: draft/tracks/<track_id>/review-report-latest.md
 
 All acceptance criteria from spec.md should be verified.
 
+7. **Open Pull Request** (if on a feature branch):
+   ```bash
+   # Push any unpushed commits first
+   git push
+
+   # Create PR targeting main
+   gh pr create \
+     --base main \
+     --title "feat(<track_id>): <title from spec.md>" \
+     --body "## Summary
+   Closes track \`<track_id>\`. See \`draft/tracks/<track_id>/spec.md\` for full acceptance criteria.
+
+   ## Changes
+   [brief bullet list of what changed]
+
+   ## Acceptance Criteria
+   [copy the checkbox list from spec.md]"
+   ```
+   - If not on a `feat/*` branch, skip silently
+   - If `gh` is not available or auth fails, print the `git push` + `gh pr create` commands for the user to run manually
+   - Record the PR URL in `draft/tracks/<track_id>/metadata.json` under `"pr_url": "<url>"`
+
 Next: Run `/draft:status` to see project overview."
 
 ## Error Handling

@@ -1760,6 +1760,13 @@ Ask about:
 - TDD preference (strict/flexible/none)
 - Commit style and frequency
 - Validation settings (auto-validate, blocking behavior)
+- GitHub flow: confirm branch-per-track + PR workflow is desired (default: yes)
+
+If GitHub flow is enabled (the default), include a **`## GitHub Branch & PR Workflow`** section in the generated `workflow.md` that documents:
+- Branch naming: `feat/<track-id>`
+- Branch created and pushed at `draft new-track` time
+- PR opened targeting `main` after `draft implement` completes
+- `main` is protected — no direct commits
 
 ## Step 4.1: Guardrails Configuration
 
@@ -3717,9 +3724,16 @@ Check if `draft/tracks/<track_id>/` already exists. If collision detected, appen
 
 See `core/shared/vcs-commands.md` for command conventions.
 
+Immediately after confirming the track ID, create and push a dedicated feature branch:
+
 ```bash
-git checkout -b <track_id>
+git checkout -b feat/<track_id>
+git push -u origin feat/<track_id>
 ```
+
+- If the branch already exists locally, switch to it: `git checkout feat/<track_id>`
+- If `git push` fails (auth / no remote), announce the branch name and instruct the user to push manually — continue with track creation regardless
+- All subsequent commits for this track go on `feat/<track_id>`; never commit track work directly to `main`
 
 ## Step 1.5: Quick Mode Path (`--quick` only)
 
@@ -5862,6 +5876,28 @@ Review: PASS | PASS WITH NOTES | FAIL
 Report: draft/tracks/<track_id>/review-report-latest.md
 
 All acceptance criteria from spec.md should be verified.
+
+7. **Open Pull Request** (if on a feature branch):
+   ```bash
+   # Push any unpushed commits first
+   git push
+
+   # Create PR targeting main
+   gh pr create \
+     --base main \
+     --title "feat(<track_id>): <title from spec.md>" \
+     --body "## Summary
+   Closes track \`<track_id>\`. See \`draft/tracks/<track_id>/spec.md\` for full acceptance criteria.
+
+   ## Changes
+   [brief bullet list of what changed]
+
+   ## Acceptance Criteria
+   [copy the checkbox list from spec.md]"
+   ```
+   - If not on a `feat/*` branch, skip silently
+   - If `gh` is not available or auth fails, print the `git push` + `gh pr create` commands for the user to run manually
+   - Record the PR URL in `draft/tracks/<track_id>/metadata.json` under `"pr_url": "<url>"`
 
 Next: Run `draft status` to see project overview."
 

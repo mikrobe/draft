@@ -1640,6 +1640,13 @@ Ask about:
 - TDD preference (strict/flexible/none)
 - Commit style and frequency
 - Validation settings (auto-validate, blocking behavior)
+- GitHub flow: confirm branch-per-track + PR workflow is desired (default: yes)
+
+If GitHub flow is enabled (the default), include a **`## GitHub Branch & PR Workflow`** section in the generated `workflow.md` that documents:
+- Branch naming: `feat/<track-id>`
+- Branch created and pushed at `draft new-track` time
+- PR opened targeting `main` after `draft implement` completes
+- `main` is protected — no direct commits
 
 ## Step 4.1: Guardrails Configuration
 

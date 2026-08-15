@@ -65,9 +65,16 @@ Check if `draft/tracks/<track_id>/` already exists. If collision detected, appen
 
 See `core/shared/vcs-commands.md` for command conventions.
 
+Immediately after confirming the track ID, create and push a dedicated feature branch:
+
 ```bash
-git checkout -b <track_id>
+git checkout -b feat/<track_id>
+git push -u origin feat/<track_id>
 ```
+
+- If the branch already exists locally, switch to it: `git checkout feat/<track_id>`
+- If `git push` fails (auth / no remote), announce the branch name and instruct the user to push manually — continue with track creation regardless
+- All subsequent commits for this track go on `feat/<track_id>`; never commit track work directly to `main`
 
 ## Step 1.5: Quick Mode Path (`--quick` only)
 
