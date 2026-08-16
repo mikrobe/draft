@@ -1,0 +1,26 @@
+{
+  "name": "draft",
+  "description": "Context-Driven Development: draft specs and plans before implementation. Structured workflows for features and fixes.",
+  "version": "3.6.0",
+  "author": {
+    "name": "mayurpise"
+  },
+  "homepage": "https://github.com/mikrobe/draft",
+  "license": "MIT",
+  "keywords": [
+    "context-driven-development",
+    "ai-assisted",
+    "planning",
+    "specifications",
+    "architecture",
+    "code-review",
+    "monorepo",
+    "tdd",
+    "validation",
+    "enterprise",
+    "incremental-refresh",
+    "signal-detection",
+    "state-management"
+  ],
+  "skills": "./skills/"
+}
